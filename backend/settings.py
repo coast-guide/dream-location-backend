@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 from decouple import config
-
+import cloudinary
+import cloudinary_storage
 
 if os.name == 'nt':
     VENV_BASE = os.environ['VIRTUAL_ENV']
@@ -54,9 +55,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'djoser',
-
     'listings.apps.ListingsConfig',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    # Media Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +143,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+# Cloudinary stuff
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUD_NAME', default=""),
+    'API_KEY': config('API_KEY', default=""),
+    'API_SECRET': config('API_SECRET', default=""),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
