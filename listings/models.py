@@ -1,21 +1,7 @@
-from django.core.files import File
-import PIL
-from io import BytesIO
 from django.contrib.gis.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 User = get_user_model()
-
-
-def compress(picture):
-    if picture:
-        pic = PIL.Image.open(picture)
-        buf = BytesIO()
-        pic.save(buf, format='JPEG', quality=35)
-        new_pic = File(buf, name=picture.name)
-        return new_pic
-    else:
-        return None
 
 class Listings(models.Model):
     seller = models.ForeignKey(
@@ -68,15 +54,6 @@ class Listings(models.Model):
 
     def __str__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        self.picture1 = compress(self.picture1)
-        self.picture2 = compress(self.picture2)
-        self.picture3 = compress(self.picture3)
-        self.picture4 = compress(self.picture4)
-        self.picture5 = compress(self.picture5)
-        super().save(*args, **kwargs)
-
 
 
 class Poi(models.Model):
