@@ -20,6 +20,8 @@ from users.api import views as users_api_views
 
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.schemas import get_schema_view
+from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,5 +41,7 @@ urlpatterns = [
     path('api-auth-djoser/', include('djoser.urls')),
     path('api-auth-djoser/', include('djoser.urls.authtoken')),
 
+    path('schema', get_schema_view(title='Listing API',
+         description='API for the dream-location project', version='1.0.0'), name='openapi-schema'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
