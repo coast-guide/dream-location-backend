@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'djoser',
     'listings.apps.ListingsConfig',
     'users.apps.UsersConfig',
+    # Documentaion
+    'drf_yasg',
     # Media Cloudinary
     'cloudinary',
     'cloudinary_storage',
